@@ -10,4 +10,10 @@ function createProductsMarkup(products) {
   return markup;
 }
 
-export { createProductsMarkup };
+function createMarkupById({ title, description, price }) {
+  return `<li><h3>${title}</h3>
+      <p>${description}</p>
+      <p>${price}</p></li>`;
+}
+
+export { createProductsMarkup, createMarkupById };
