@@ -4,4 +4,5 @@ export const refs = {
   singleProductDiv: document.querySelector('#singleProduct'),
   newProductSingleForm: document.querySelector('#newProductSingleForm'),
   newProductSection: document.querySelector('#newProductSection'),
+  deletionProductForm: document.querySelector('#deletionProductForm'),
 };

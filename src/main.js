@@ -1,6 +1,8 @@
 // 1.Створити функцію, при виклику якої буде робитись запит на всі продукти і по результату запиту буде рендеритись розмітка.
 // 2. При сабміті форми робиться розмітка одного продукту по id.
-// 3. За даними, які будуть введені в форму, створити новий продукт (метод post) і відрендирити його (розмітка)
+// 3. За даними, які будуть введені в форму, створити новий продукт (метод post) і відрендирити його (розмітка).
+// 4.Видаліть продукт за його ID. Якщо успішно, виведіть через alert SUCCESS та інфо про
+// видалений продукт, інакше виведіть ERROR та причину помилки.
 
 import { instanceAPI } from './js/APIinstance';
 import { refs } from './js/refs';
@@ -49,5 +51,27 @@ async function onFormSubmitForNewProduct(event) {
 
 async function postData(data) {
   const response = await instanceAPI.post('/products/add', data);
+  return response.data;
+}
+// Завдання 4
+
+refs.deletionProductForm.addEventListener('submit', onDeletionFormSubmit);
+
+async function onDeletionFormSubmit(event) {
+  event.preventDefault();
+  const deletionId = event.currentTarget.elements.deletionId.value.trim();
+  try {
+    const result = await deletionProductById(deletionId);
+    console.log(result);
+    if (result.isDeleted) {
+      alert(`Success, product ${result.title} was deleted`);
+    } else {
+      throw new Error();
+    }
+  } catch (error) {}
+}
+
+async function deletionProductById(deletionId) {
+  const response = await instanceAPI.delete(`/products/${deletionId}`);
   return response.data;
 }
