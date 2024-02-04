@@ -62,16 +62,20 @@ async function onDeletionFormSubmit(event) {
   const deletionId = event.currentTarget.elements.deletionId.value.trim();
   try {
     const result = await deletionProductById(deletionId);
-    console.log(result);
+
     if (result.isDeleted) {
       alert(`Success, product ${result.title} was deleted`);
-    } else {
-      throw new Error();
     }
-  } catch (error) {}
+  } catch (error) {
+    alert(`There are not a product with this ID. ${error}`);
+  }
 }
 
 async function deletionProductById(deletionId) {
-  const response = await instanceAPI.delete(`/products/${deletionId}`);
-  return response.data;
+  try {
+    const response = await instanceAPI.delete(`/products/${deletionId}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
 }
